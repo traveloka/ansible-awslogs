@@ -1,0 +1,6 @@
+#!/bin/bash
+# Version: {{ awslogs_version }}
+MAILTO=""
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+30 * * * * root logrotate -s /var/log/logstatus {{ awslogs_logrotate_config_file }}

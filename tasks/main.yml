@@ -1,0 +1,88 @@
+---
+
+- block:
+    - name: create directories
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ awslogs_home }}"
+        - "{{ awslogs_agent_state_dir }}"
+        - "{{ awslogs_agent_etc_dir }}"
+        - "{{ awslogs_agent_conf_dir }}"
+        - "{{ awslogs_agent_log_dir }}"
+
+    - name: install virtualenv
+      pip:
+        name: virtualenv
+        state: latest
+
+    - name: install awslogs
+      pip:
+        name: "{{ awslogs_plugin_name }}"
+        version: "{{ awslogs_plugin_version }}"
+        virtualenv: "{{ awslogs_home }}"
+
+    - name: configure cwlogs plugin
+      template:
+        src: aws.conf.j2
+        dest: "{{ awslogs_aws_config_file }}"
+        mode: "0600"
+      no_log: true
+
+    - name: copy configs
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: "{{ item.mode|default(omit) }}"
+      with_items:
+        - src: AGENT_LOG_ROTATE_CONFIG.j2
+          dest: "{{ awslogs_logrotate_config_file }}"
+        - src: DEFAULT_CONFIG.j2
+          dest: "{{ awslogs_agent_config_file }}"
+          mode: "0600"
+        - src: PROXY_CONFIG.j2
+          dest: "{{ awslogs_aws_proxy_config_file }}"
+      notify: restart awslogs
+
+    - name: copy scripts
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: "0755"
+      with_items:
+        - src: AWSLOGS_VERSION_SCRIPT.j2
+          dest: "{{ awslogs_version_script_path }}"
+        - src: DAEMON_SCRIPT.j2
+          dest: "{{ awslogs_agent_daemon_script_path }}"
+        - src: LAUNCHER_SCRIPT.j2
+          dest: "{{ awslogs_agent_launcher }}"
+        - src: NANNY_SCRIPT.j2
+          dest: "{{ awslogs_agent_nanny_path }}"
+      notify: restart awslogs
+
+    - name: configure cron jobs
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      with_items:
+        - src: LOGROTATE_CRON_CMD.j2
+          dest: "{{ awslogs_logrotate_cron_path }}"
+        - src: NANNY_CRON_CMD.j2
+          dest: "{{ awslogs_agent_nanny_cron_path }}"
+
+    - name: list generated files
+      template:
+        src: AWSLOGS_GENERATED_FILES_LOG.j2
+        dest: "{{ awslogs_generated_files_log }}"
+
+    - name: enable service
+      service:
+        name: "{{ awslogs_agent_daemon_name }}"
+        state: started
+        enabled: yes
+
+  become: yes
+  become_method: sudo
+  tags:
+    - awslogs

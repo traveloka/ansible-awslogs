@@ -1,0 +1,16 @@
+#!/bin/sh
+# Version: {{ awslogs_version }}
+PIDFILE={{ awslogs_agent_pid_file }}
+LOCKFILE={{ awslogs_agent_lock_file }}
+
+# Bail out if PID file doesn't exist. It implies that the
+# process was never started.
+if [ ! -f $PIDFILE ]
+then
+    exit 0
+fi
+
+/bin/ps -C -p `/bin/cat $PIDFILE` | /bin/grep "{{ awslogs_agent_launcher }}" > /dev/null
+RETVAL=$?
+echo
+[ $RETVAL != 0 ] && [ -f $LOCKFILE ] && /usr/sbin/service {{ awslogs_agent_daemon_name }} restart

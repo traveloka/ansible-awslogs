@@ -1,0 +1,5 @@
+#!/bin/sh
+# Version: {{ awslogs_version }}
+echo -n $$ > {{ awslogs_agent_pid_file }}
+[ -f {{ awslogs_aws_proxy_config_file }} ] && . {{ awslogs_aws_proxy_config_file }}
+/usr/bin/env -i HTTPS_PROXY=$HTTPS_PROXY HTTP_PROXY=$HTTP_PROXY NO_PROXY=$NO_PROXY AWS_CONFIG_FILE={{ awslogs_aws_config_file }} HOME={{ ansible_env.HOME }} /usr/bin/nice -n 4 {{ awslogs_awscli_cmd }} logs push --config-file {{ awslogs_agent_config_file }} --additional-configs-dir {{ awslogs_agent_conf_dir }} >> {{ awslogs_agent_log_file }} 2>&1

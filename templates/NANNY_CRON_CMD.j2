@@ -1,0 +1,6 @@
+#!/bin/bash
+# Version: {{ awslogs_version }}
+MAILTO=""
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+* * * * * root {{ awslogs_agent_nanny_path }} > /dev/null 2>&1

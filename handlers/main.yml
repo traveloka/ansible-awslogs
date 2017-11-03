@@ -1,0 +1,7 @@
+---
+- name: restart awslogs
+  become: yes
+  become_method: sudo
+  service:
+    name: "{{ awslogs_agent_daemon_name }}"
+    state: restarted

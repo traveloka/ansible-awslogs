@@ -1,0 +1,15 @@
+
+# Version: {{ awslogs_version }}
+{{ awslogs_agent_log_file }} {
+    su root root
+    missingok
+    notifempty
+    size 100M
+    create 0600 root root
+    delaycompress
+    compress
+    rotate 4
+    postrotate
+        service {{ awslogs_agent_daemon_name }} restart
+    endscript
+}

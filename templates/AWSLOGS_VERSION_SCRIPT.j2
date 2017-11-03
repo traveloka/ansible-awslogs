@@ -1,0 +1,16 @@
+#!/bin/sh
+FILES={{ awslogs_generated_files_log }}
+for file in `cat ${FILES}`; do
+    if [ -e $file ]; then
+        echo "${file} version:"
+        cat ${file} | grep "# Version: "
+    else
+        echo "$file not found on system"
+    fi
+done
+
+echo "CloudWatch Logs Plugin Version:"
+{{ awslogs_bin }}/pip show awscli-cwlogs
+
+echo "AWS CLI Version:"
+{{ awslogs_bin }}/pip show awscli

@@ -1,0 +1,71 @@
+---
+# the version of the awslogs agent installer imitated by this role
+awslogs_version: 1.3.9
+# awslogs plugin name
+awslogs_plugin_name: awscli-cwlogs
+# awslogs plugin version
+awslogs_plugin_version: 1.4.0
+# awslogs installation directory and virtualenv
+awslogs_home: "/var/awslogs"
+# awslogs bin directory
+awslogs_bin: "{{ awslogs_home }}/bin"
+# awslogs state directory
+awslogs_agent_state_dir: "{{ awslogs_home }}/state"
+# awslogs etc directory
+awslogs_agent_etc_dir: "/etc/awslogs"
+# awslogs main configuration file
+awslogs_agent_config_file: "{{ awslogs_agent_etc_dir }}/awslogs.conf"
+# awslogs additional configuration directory
+# AWS uses '/etc/awslogs/config' by default
+awslogs_agent_conf_dir: "{{ awslogs_agent_etc_dir }}/conf.d"
+# awslogs launcher script
+awslogs_agent_launcher: "{{ awslogs_bin }}/awslogs-agent-launcher.sh"
+# awslogs nanny script
+awslogs_agent_nanny_path: "{{ awslogs_bin }}/awslogs-nanny.sh"
+# cronjob to run awslogs nanny script
+awslogs_agent_nanny_cron_path: "/etc/cron.d/awslogs"
+# awslogs lock file
+awslogs_agent_lock_file: "{{ awslogs_agent_state_dir }}/awslogs.lock"
+# awslogs mutex file
+awslogs_agent_mutex_file: "{{ awslogs_agent_state_dir }}/awslogs.mutex"
+# awslogs starting flag
+awslogs_agent_start_flag_file: "{{ awslogs_agent_state_dir }}/starting.flag"
+# awslogs pid file
+awslogs_agent_pid_file: "{{ awslogs_agent_state_dir }}/awslogs.pid"
+# awslogs log directory
+# AWS uses '/var/log' by default
+awslogs_agent_log_dir: "/var/log/awslogs"
+# awslogs log file
+awslogs_agent_log_file: "{{ awslogs_agent_log_dir}}/awslogs.log"
+# logrotate configuration for awslogs log file
+awslogs_logrotate_config_file: "/etc/logrotate.d/awslogs"
+# cron job to rotate awslogs log file
+awslogs_logrotate_cron_path: "/etc/cron.d/awslogs_log_rotate"
+# awslogs service script
+awslogs_agent_daemon_script_path: "/etc/init.d/awslogs"
+# awslogs service name
+awslogs_agent_daemon_name: "awslogs"
+# AWS CLI executable
+awslogs_awscli_cmd: "{{ awslogs_bin }}/aws"
+# AWS CLI configuration file
+awslogs_aws_config_file: "{{ awslogs_agent_etc_dir }}/aws.conf"
+# AWS CLI proxy configuration file
+awslogs_aws_proxy_config_file: "{{ awslogs_agent_etc_dir }}/proxy.conf"
+# awslogs version script
+awslogs_version_script_path: "{{ awslogs_bin }}/awslogs-version.sh"
+# default awslogs region
+awslogs_region: "ap-southeast-1"
+# log of files generated during awslogs installation
+awslogs_generated_files_log: "{{ awslogs_agent_state_dir }}/generated-files"
+# the http proxy that's used to communicate with CloudWatch Logs service.
+awslogs_http_proxy: ""
+# the https proxy that's used to communicate with CloudWatch Logs service.
+awslogs_https_proxy: ""
+# a comma-separated list of domain extensions the proxy should not be used for.
+awslogs_no_proxy: ""
+# Specifies the max number of log events in a batch
+awslogs_batch_count: 4000
+# Specifies the max size of log events in a batch, in bytes
+awslogs_batch_size: 1048576
+# Specifies the time duration for the batching of log events
+awslogs_buffer_duration: 5000

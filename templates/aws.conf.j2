@@ -1,0 +1,8 @@
+[plugins]
+cwlogs = cwlogs
+[default]
+{% if awslogs_access_key_id is defined and awslogs_secret_access_key is defined %}
+aws_access_key_id = {{ awslogs_access_key_id }}
+aws_secret_access_key = {{ awslogs_secret_access_key }}
+{% endif %}
+region = {{ awslogs_region }}
