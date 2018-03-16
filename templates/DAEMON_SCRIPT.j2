@@ -47,6 +47,7 @@ do_start () {
     (
         flock -w 10 -x 9
         echo "Starting system $DAEMON_NAME daemon"
+        rm -f $PIDFILE
         $START_CMD
         RETVAL=$?
         touch $LOCKFILE
@@ -83,6 +84,7 @@ do_stop () {
         rm -f $LOCKFILE
     ) 9>$MUTEXFILE
     rm -f $MUTEXFILE
+    rm -f $PIDFILE
 }
 
 do_restart () {
