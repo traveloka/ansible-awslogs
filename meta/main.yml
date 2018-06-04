@@ -11,5 +11,5 @@ galaxy_info:
   - cloud
   - cloud:ec2
   - monitoring
- dependencies:
+dependencies:
   - ansible-pip
