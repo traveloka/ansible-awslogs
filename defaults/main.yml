@@ -71,5 +71,3 @@ awslogs_batch_size: 1048576
 awslogs_buffer_duration: 5000
 # virtualenv state
 virtualenv_state: "latest"
-# virtualenv state
-virtualenv_version: 16.7.7
