@@ -15,7 +15,8 @@
     - name: install virtualenv
       pip:
         name: virtualenv
-        state: latest
+        state: "{{ virtualenv_state }}"
+        version: "{{ virtualenv_version }}"
 
     - name: install awslogs
       pip:
