@@ -69,3 +69,5 @@ awslogs_batch_count: 4000
 awslogs_batch_size: 1048576
 # Specifies the time duration for the batching of log events
 awslogs_buffer_duration: 5000
+# Specifies virtualenv state
+awslogs_virtualenv_state: "latest"

@@ -16,6 +16,8 @@ These variables are not set in this role, but can be used:
    - name: awslogs_secret_access_key
      desc: aws secret_access_key to stream the log
 
+   - name: awslogs_virtualenv_version
+     desc: version of virtualenv to be installed if `awslogs_virtualenv_state` is set to `present`
 
 ### Defaults ##
 
